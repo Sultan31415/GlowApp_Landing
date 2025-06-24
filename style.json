@@ -1,0 +1,71 @@
+{
+    "colors": {
+      "white": "#ffffff",
+      "gray": {
+        "100": "#f3f4f6",
+        "300": "#d1d5db",
+        "500": "#6b7280",
+        "600": "#4b5563",
+        "900": "#111827"
+      },
+      "purple": {
+        "200": "#e9d5ff",
+        "500": "#a855f7",
+        "600": "#9333ea",
+        "700": "#7e22ce"
+      },
+      "pink": {
+        "200": "#fbcfe8",
+        "500": "#ec4899",
+        "600": "#db2777",
+        "700": "#be185d"
+      },
+      "blue": {
+        "100": "#dbeafe",
+        "200": "#bfdbfe",
+        "600": "#2563eb"
+      },
+      "green": {
+        "100": "#dcfce7",
+        "200": "#bbf7d0",
+        "500": "#22c55e",
+        "600": "#16a34a"
+      },
+      "orange": {
+        "100": "#ffedd5",
+        "600": "#ea580c"
+      },
+      "red": {
+        "500": "#ef4444"
+      },
+      "transparent": "transparent",
+      "shadow-util": {
+        "purple-25": "rgba(147, 51, 234, 0.25)",
+        "purple-30": "rgba(147, 51, 234, 0.30)",
+        "gray-5":   "rgba(0, 0, 0, 0.05)"
+      }
+    },
+  
+    "backgroundGradients": [
+      "bg-gradient-to-r from-purple-600 to-pink-600",
+      "hover:from-purple-700 hover:to-pink-700"
+    ],
+  
+    "typography": {
+      "heading1": { "fontSize": ["text-6xl", "md:text-7xl"], "fontWeight": "font-extrabold", "color": "text-gray-900" },
+      "heading2": { "fontSize": "text-4xl", "fontWeight": "font-bold", "color": "text-gray-900" },
+      "paragraph": { "fontSize": ["text-xl", "md:text-2xl"], "color": "text-gray-600", "fontWeight": "font-light" }
+    },
+  
+    "shapes": {
+      "roundedFull": "rounded-full",
+      "rounded3xl": "rounded-3xl",
+      "rounded4xl": "rounded-4xl"
+    },
+  
+    "effects": {
+      "shadows": ["shadow-md", "shadow-lg", "hover:shadow-xl", "shadow-purple-500/25", "hover:shadow-purple-500/30", "shadow-gray-500/5"],
+      "transforms": ["transform", "hover:scale-105", "group-hover:translate-x-1", "hover:-translate-y-2"],
+      "transitions": ["transition-all", "duration-300", "duration-500"]
+    }
+  }
