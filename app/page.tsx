@@ -164,26 +164,26 @@ export default function GlowUpLanding() {
         <nav
           className={`bg-white/20 backdrop-blur-2xl border border-gray-200/30 shadow-lg fixed z-50 transition-all duration-500 ease-in-out
             ${navCompressed
-              ? "top-0 rounded-xl py-1 max-w-4xl mx-auto left-0 right-0 w-full"
-              : "top-4 rounded-full py-3 w-full left-0"}
+              ? "top-0 rounded-xl py-0.5 max-w-4xl mx-auto left-0 right-0 w-full"
+              : "top-4 rounded-full py-1 w-full left-0"}
             px-0
           `}
         >
-          <div className={`mx-auto max-w-4xl px-8 flex items-center justify-between transition-all duration-300 ${navCompressed ? "py-1" : "py-3"}`}>
-            <div className="flex items-center space-x-3">
-              <div className={`bg-gray-900 flex items-center justify-center transition-all duration-300 overflow-hidden ${navCompressed ? "w-8 h-8 rounded-lg" : "w-10 h-10 rounded-xl"}`}> 
-                <img src="/icon.png" alt="GlowApp Logo" className={`object-contain transition-all duration-300 ${navCompressed ? "w-6 h-6" : "w-8 h-8"}`} />
+          <div className={`mx-auto max-w-4xl px-4 flex items-center justify-between transition-all duration-300 ${navCompressed ? "py-0.5" : "py-1"}`}>
+            <div className="flex items-center space-x-2">
+              <div className={`bg-gray-900 flex items-center justify-center transition-all duration-300 overflow-hidden ${navCompressed ? "w-6 h-6 rounded-lg" : "w-8 h-8 rounded-xl"}`}> 
+                <img src="/icon.png" alt="GlowApp Logo" className={`object-contain transition-all duration-300 ${navCompressed ? "w-4 h-4" : "w-6 h-6"}`} />
               </div>
-              <span className={`font-extrabold tracking-tight text-gray-900 transition-all duration-300 ${navCompressed ? "text-xl" : "text-2xl"}`}>GlowApp</span>
+              <span className={`font-extrabold tracking-tight text-gray-900 transition-all duration-300 ${navCompressed ? "text-lg" : "text-xl"}`}>GlowApp</span>
             </div>
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               {sections.slice(1).map((section) => (
                 <a
                   key={section.id}
                   href={`#${section.id}`}
                   onClick={(e) => scrollToSection(e, section.id)}
-                  className={`font-semibold text-lg px-2 py-1 rounded-lg transition-all duration-300 relative group
+                  className={`font-semibold text-base px-2 py-1 rounded-lg transition-all duration-300 relative group
                     ${activeSection === section.id ? "text-gray-900" : "text-gray-700 hover:text-black"}
                   `}
                 >
@@ -193,7 +193,7 @@ export default function GlowUpLanding() {
                   )}
                 </a>
               ))}
-              <Button className="ml-4 px-5 py-2 rounded-full bg-black/90 text-white font-semibold shadow-md hover:bg-black transition-all duration-200">
+              <Button className="ml-2 px-4 py-1.5 rounded-full bg-black/90 text-white font-semibold shadow-md hover:bg-black transition-all duration-200 text-base">
                 Get Started
               </Button>
             </div>
@@ -242,7 +242,7 @@ export default function GlowUpLanding() {
           <div className="max-w-7xl mx-auto text-center">
             {/* Main Headline - Top Center, Larger */}
             <h1
-              className="text-8xl md:text-9xl font-extrabold text-gray-900 mb-10 leading-tight tracking-wide text-center"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-8xl 2xl:text-8xl font-extrabold text-gray-900 mb-10 leading-tight tracking-wide text-center max-w-5xl mx-auto"
               style={{ fontFamily: '"Playfair Display", serif' }}
             >
               See the Truth.<br />
