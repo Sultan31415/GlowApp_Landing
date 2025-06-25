@@ -238,46 +238,38 @@ export default function GlowUpLanding() {
         )}
 
         {/* Hero Section */}
-        <section id="hero" className="relative py-20 px-4">
-          <div className="max-w-6xl mx-auto text-center">
-            {/* Central Logo */}
-            <div className="mb-12">
-              <img src="/icon.png" alt="GlowApp Logo" className="w-20 h-20 object-contain mx-auto mb-8" />
-            </div>
-
-            {/* Main Headline */}
-            <div
-              className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        <section id="hero" className="relative flex flex-col items-center justify-center min-h-screen px-4">
+          <div className="max-w-7xl mx-auto text-center">
+            {/* Main Headline - Top Center, Larger */}
+            <h1
+              className="text-8xl md:text-9xl font-extrabold text-gray-900 mb-10 leading-tight tracking-wide text-center"
+              style={{ fontFamily: '"Playfair Display", serif' }}
             >
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-                AI Knows Who You Could Become.
-              </h1>
-
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
-                Start your transformation in 30 days.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
-                <Button
-                  onClick={scrollToQuiz}
-                  size="lg"
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                >
-                  Start Your GlowApp
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
-                >
-                  <Play className="mr-2 w-5 h-5" />
-                  Learn More
-                </Button>
-              </div>
+              See the Truth.<br />
+              Become the Potential.
+            </h1>
+            <p className="text-3xl md:text-4xl text-gray-600 mb-20 max-w-3xl mx-auto">
+              Start your transformation in 30 days.
+            </p>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
+              <Button
+                onClick={scrollToQuiz}
+                size="lg"
+                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              >
+                Start Your GlowApp
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-8 py-4 text-lg rounded-full transition-all duration-300 transform hover:scale-105"
+              >
+                <Play className="mr-2 w-5 h-5" />
+                Learn More
+              </Button>
             </div>
-
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
