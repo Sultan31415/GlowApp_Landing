@@ -39,6 +39,7 @@ export default function GlowUpLanding() {
   const [sliderValue, setSliderValue] = useState([0])
   const [isVisible, setIsVisible] = useState(false)
   const [activeSection, setActiveSection] = useState("")
+  const [navCompressed, setNavCompressed] = useState(false)
 
   const sections = [
     { id: "hero", name: "Home" },
@@ -58,25 +59,51 @@ export default function GlowUpLanding() {
 
   // Scroll spy functionality
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100 // Offset for sticky header
-
-      for (const section of sections) {
-        const element = document.getElementById(section.id)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section.id)
-            break
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPosition = window.scrollY + 100; // Offset for sticky header
+          let foundSection = "";
+          for (const section of sections) {
+            const element = document.getElementById(section.id);
+            if (element) {
+              const { offsetTop, offsetHeight } = element;
+              if (
+                scrollPosition >= offsetTop &&
+                scrollPosition < offsetTop + offsetHeight
+              ) {
+                foundSection = section.id;
+                break;
+              }
+            }
           }
-        }
+          if (foundSection && foundSection !== activeSection) {
+            setActiveSection(foundSection);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Call once to set initial state
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sections, activeSection]);
+
+  // Nav compress on scroll
+  useEffect(() => {
+    const handleNavScroll = () => {
+      if (window.scrollY > 20) {
+        setNavCompressed(true)
+      } else {
+        setNavCompressed(false)
       }
     }
-
-    window.addEventListener("scroll", handleScroll)
-    handleScroll() // Call once to set initial state
-
-    return () => window.removeEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleNavScroll)
+    return () => window.removeEventListener("scroll", handleNavScroll)
   }, [])
 
   const scrollToQuiz = useCallback(() => {
@@ -134,86 +161,88 @@ export default function GlowUpLanding() {
     <AuroraBackground>
       <div className="min-h-screen">
         {/* Navigation */}
-        <nav className="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50 transition-all duration-300">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center mb-8 transition-all duration-500 hover:scale-110">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-gray-900">GlowApp</span>
+        <nav
+          className={`bg-white/20 backdrop-blur-2xl border border-gray-200/30 shadow-lg fixed z-50 transition-all duration-500 ease-in-out
+            ${navCompressed
+              ? "top-0 rounded-xl py-1 max-w-4xl mx-auto left-0 right-0 w-full"
+              : "top-4 rounded-full py-3 w-full left-0"}
+            px-0
+          `}
+        >
+          <div className={`mx-auto max-w-4xl px-8 flex items-center justify-between transition-all duration-300 ${navCompressed ? "py-1" : "py-3"}`}>
+            <div className="flex items-center space-x-3">
+              <div className={`bg-gray-900 flex items-center justify-center transition-all duration-300 overflow-hidden ${navCompressed ? "w-8 h-8 rounded-lg" : "w-10 h-10 rounded-xl"}`}> 
+                <img src="/icon.png" alt="GlowApp Logo" className={`object-contain transition-all duration-300 ${navCompressed ? "w-6 h-6" : "w-8 h-8"}`} />
               </div>
-
-              <div className="hidden md:flex items-center space-x-8">
+              <span className={`font-extrabold tracking-tight text-gray-900 transition-all duration-300 ${navCompressed ? "text-xl" : "text-2xl"}`}>GlowApp</span>
+            </div>
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center space-x-8">
+              {sections.slice(1).map((section) => (
                 <a
-                  href="#how-it-works"
-                  onClick={(e) => scrollToSection(e, "how-it-works")}
-                  className={`font-medium transition-all duration-300 relative ${
-                    activeSection === "how-it-works" ? "text-purple-600" : "text-gray-600 hover:text-gray-900"
-                  }`}
+                  key={section.id}
+                  href={`#${section.id}`}
+                  onClick={(e) => scrollToSection(e, section.id)}
+                  className={`font-semibold text-lg px-2 py-1 rounded-lg transition-all duration-300 relative group
+                    ${activeSection === section.id ? "text-gray-900" : "text-gray-700 hover:text-black"}
+                  `}
                 >
-                  How it Works
-                  {activeSection === "how-it-works" && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-purple-600 rounded-full" />
+                  {section.name}
+                  {activeSection === section.id && (
+                    <span className="absolute left-1/2 -bottom-1.5 -translate-x-1/2 w-6 h-1 bg-gray-900 rounded-full opacity-80" />
                   )}
                 </a>
-                <a
-                  href="#features"
-                  onClick={(e) => scrollToSection(e, "features")}
-                  className={`font-medium transition-all duration-300 relative ${
-                    activeSection === "features" ? "text-purple-600" : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  Features
-                  {activeSection === "features" && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-purple-600 rounded-full" />
-                  )}
-                </a>
-                <a
-                  href="#pricing"
-                  onClick={(e) => scrollToSection(e, "pricing")}
-                  className={`font-medium transition-all duration-300 relative ${
-                    activeSection === "pricing" ? "text-purple-600" : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  Pricing
-                  {activeSection === "pricing" && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-purple-600 rounded-full" />
-                  )}
-                </a>
-                <a
-                  href="#contact"
-                  onClick={(e) => scrollToSection(e, "contact")}
-                  className={`font-medium transition-all duration-300 relative ${
-                    activeSection === "contact" ? "text-purple-600" : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  Contact
-                  {activeSection === "contact" && (
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-purple-600 rounded-full" />
-                  )}
-                </a>
-              </div>
-
-              <Button
-                onClick={scrollToQuiz}
-                className="bg-gray-900 hover:bg-gray-900 text-white px-6 py-2 rounded-full transition-all duration-300 hover:scale-105"
+              ))}
+              <Button className="ml-4 px-5 py-2 rounded-full bg-black/90 text-white font-semibold shadow-md hover:bg-black transition-all duration-200">
+                Get Started
+              </Button>
+            </div>
+            {/* Mobile Hamburger */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setIsVisible((v) => !v)}
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+                aria-label="Open main menu"
               >
-                <Crown className="w-4 h-4 mr-2" />
+                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </nav>
+        {/* Mobile Nav Drawer */}
+        {isVisible && (
+          <div className="md:hidden bg-white/80 backdrop-blur-2xl border border-gray-200/60 px-4 pt-2 pb-4 rounded-3xl shadow-xl animate-fade-in mx-2 mt-2">
+            <div className="flex flex-col space-y-2">
+              {sections.slice(1).map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  onClick={(e) => {
+                    scrollToSection(e, section.id);
+                    setIsVisible(false);
+                  }}
+                  className={`font-semibold text-base px-3 py-2 rounded-lg transition-all duration-200
+                    ${activeSection === section.id ? "text-gray-900" : "text-gray-700 hover:text-black"}
+                  `}
+                >
+                  {section.name}
+                </a>
+              ))}
+              <Button className="mt-2 px-6 py-2 rounded-xl bg-black text-white font-semibold shadow hover:bg-gray-900 transition-all duration-300 w-full">
                 Get Started
               </Button>
             </div>
           </div>
-        </nav>
+        )}
 
         {/* Hero Section */}
         <section id="hero" className="relative py-20 px-4">
           <div className="max-w-6xl mx-auto text-center">
             {/* Central Logo */}
             <div className="mb-12">
-              <div className="w-24 h-24 mx-auto bg-gray-900 rounded-2xl shadow-lg flex items-center justify-center mb-8 transition-all duration-500 hover:scale-110">
-                <Sparkles className="w-12 h-12 text-white" />
-              </div>
+              <img src="/icon.png" alt="GlowApp Logo" className="w-20 h-20 object-contain mx-auto mb-8" />
             </div>
 
             {/* Main Headline */}
@@ -221,13 +250,11 @@ export default function GlowUpLanding() {
               className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
             >
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-                See Who You Could Become.
-                <br />
-                <span className="text-gray-600">Powered by AI.</span>
+                AI Knows Who You Could Become.
               </h1>
 
               <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
-                Transform your life in 30 days with AI-powered guidance and visualization
+                Start your transformation in 30 days.
               </p>
 
               {/* CTA Buttons */}
